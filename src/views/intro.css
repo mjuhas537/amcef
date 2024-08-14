@@ -1,0 +1,92 @@
+body{
+    padding: 0px 20px;
+}
+
+.welcome{
+    display: inline-block;
+    margin: 10px 0 30px 0;
+    width: 100%;
+}
+
+h1{
+    text-align: center;
+    margin:0px;
+}
+
+h3 {
+    text-align: center;
+    width: 100%;
+    margin: 0px;
+    padding: 10px;
+}
+
+a{
+    padding: 5px 10px;
+}
+
+.login{
+    padding-top: 5px;
+    text-align: center;
+}
+
+table {
+    max-width: 90%;
+    height: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse
+}
+
+td,
+th {
+    min-width: 50px;
+    max-width: 300px;
+    text-align:left;
+    padding: 10px 15px 7px 5px;
+    word-wrap: break-word
+}
+
+td{
+    border-bottom: 1px solid grey;
+}
+
+tr:first-of-type{
+    background-color: beige;
+}
+
+td:nth-of-type(2) {
+    min-width: 174px;
+}
+
+.section1{
+    display: inline-flex;
+    margin: 10px 0 20px 0;
+    width: 100%;
+} 
+
+
+input[type=text]:focus,
+input[type=text]:hover,
+textarea:focus,
+textarea:hover {
+    background-color: lightgreen;
+}
+
+textarea{
+    resize: none;
+    overflow: auto 
+}
+
+div textarea:focus,
+td  textarea:focus {
+    position:absolute;
+    height: 80px;
+    width: 300px;
+}
+
+
+
+
+ 

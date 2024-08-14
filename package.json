@@ -1,0 +1,39 @@
+{
+   "name": "typeormtest",
+   "version": "1.0.0",
+   "main": "app.js",
+   "type": "commonjs",
+   "scripts": {
+      "start": "ts-node src/app.ts",
+      "create": "typeorm-ts-node-esm migration:create ./src/migration/test",
+      "generate": "typeorm-ts-node-esm migration:generate ./src/migration/test  -d  ./src/data-source",
+      "migrate": "typeorm-ts-node-esm migration:run  -d ./src/data-source",
+      "lint": "ejslint src/views/table.ejs",
+      "nodemon": "nodemon  src/app.ts"
+   },
+   "keywords": [],
+   "author": "",
+   "license": "ISC",
+   "description": "",
+   "dependencies": {
+      "bcrypt": "^5.1.1",
+      "body-parser": "^1.20.2",
+      "ejs": "^3.1.10",
+      "express": "^4.19.2",
+      "express-flash": "^0.0.2",
+      "express-session": "^1.18.0",
+      "passport": "^0.7.0",
+      "passport-local": "^1.0.0",
+      "path": "^0.12.7",
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.14",
+      "ts-node": "^10.9.2",
+      "typeorm": "0.3.20",
+      "typescript": "^5.5.3"
+   },
+   "devDependencies": {
+      "@types/node": "^16.18.101",
+      "ejs-lint": "^2.0.0",
+      "nodemon": "^3.1.4"
+   }
+}

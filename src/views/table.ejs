@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./intro.css" rel="stylesheet" type="text/css">
+    </link>
+</head>
+<body>
+    <div class = "welcome" >
+        <h1>Welcome to the to-do list  </h1>
+        <h3> You are logged as <%= message.name %> / <%= message.email %> </h3> 
+    </div>
+    <div class="section1"  >
+        <div >
+            <span> <b>Create Task</b></span>
+            <form action="/createTask" method="POST">
+                <div>
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" maxlength="30" required>
+                </div>
+                <div>
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" rows="1" maxlength="300" placeholder="... max 300 characters.." required ></textarea>
+                </div>
+                <div>
+                    <label for="deadline">Deadline</label>
+                    <input type="date" id="deadline" name="deadline" required >
+                </div>
+                <div>
+                    <label for="flag">Flag</label>
+                    <select id="flag" name="flag" size="1" >
+                        <option value="crated">CREATED</option>
+                        <option value="realized">REALIZED</option>
+                        <option value="done">DONE</option>
+                        <option value="cancel">CANCEL</option>
+                    </select>
+                </div>
+                <div>
+                    <span> Member / author : </span>
+                    <span> <%= message.name %> </span>
+                    <input type="text" id="member" name="member" value="<%= message.name  %>" style="visibility: hidden">
+                </div>
+                <button type="submit">createTask</button>
+            </form>
+        </div>
+        <div >
+            <div> <b>Members</b></div>
+            <div><%= members %></div>
+        </div>
+    </div>
+    <div class="info">
+        <span> The format for adding a new member is "user1, user2, user3"
+            , please do not add spaces, dots or other characters
+        </span>
+    </div>
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Deadline</th>
+            <th>Flag</th>
+            <th>Membes</th>
+            <th>Edit</th>
+        </tr>
+        <% data.forEach(item=> { %>
+            <% let newDate=new Date(item.deadline) %> 
+            <% let month= newDate.getMonth()<10 ? "0"+newDate.getMonth():newDate.getMonth() %> 
+            <% let day=newDate.getDate()<10 ? "0" +newDate.getDate():newDate.getDate() %>
+            <% let date= newDate.getFullYear() + "-" + month + "-" + day %>
+            <tr>
+                <form action="/updateTask" method="POST">
+                    <%# Spravne je metoda PUT, ale ejs pozna len GET a POST, vraj sa da metoda-override %>
+                        <input type="text" id="id" name="id" value="<%= item.id %>" style="display: none">
+                    <td>
+                        <input type="text" id="title" name="title" value= "<%= item.title %>" required > 
+                    </td>
+                    <td>
+                        <textarea  id="description" name="description"  rows="1" maxlength="300" required >"<%= item.description %>"</textarea>
+                    </td>
+                    <td>
+                        <input type="date" id="deadline" name="deadline" value="<%= date %>" required >
+                    </td>
+                    <td>
+                        <select id="flag" name="flag" size="1" >
+                            <option value="crated" <%= item.flag == "crated" ? "selected":"" %>> CREATED</option>
+                            <option value="realized" <%= item.flag == "realized" ? "selected":"" %> >REALIZED</option>
+                            <option value="done"  <%= item.flag == "done" ? "selected":"" %>>DONE</option>
+                            <option value="cancel"<%= item.flag == "cancel" ? "selected":"" %>>CANCEL</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input type="text" id="member" name="member" value="<%= item.member %>"" required >
+                    
+                    </td>
+                    <td>
+                        <button type="submit">updateTask</button>
+                    </td>                 
+                </form>
+            </tr>
+        <% }); %>
+    </table>
+<form action="/logout" method="GET">
+    <button type="submit">Log Out</button>
+</form>
+</body>
+</html>
+

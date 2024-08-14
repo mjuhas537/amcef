@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./intro.css" rel="stylesheet" type="text/css">
+    </link>
+</head>
+
+<body>
+    <div class = "welcome" >
+        <h1>Welcome to the to-do list  </h1>
+    
+        <div class ="login"> 
+            <a href="/login">Login</a>    
+            <a href="/registration">Registration</a>
+        </div>
+    </div> 
+    <table >
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Deadline</th>
+            <th>Flag</th>
+            <th>Members</th>
+        </tr>
+         <% data.forEach(item=> { %>
+            <% let newDate=new Date(item.deadline) %> 
+            <% let month= newDate.getMonth()<10 ? "0"+newDate.getMonth():newDate.getMonth() %> 
+            <% let day=newDate.getDate()<10 ? "0" +newDate.getDate():newDate.getDate() %>
+            <% let date= newDate.getFullYear() + "-" + month + "-" + day %>
+        <tr>
+            <td> <%= item.title %>  </td>
+            <td> <%= item.description %> </td>
+            <td> <%= date %>  </td>
+            <td> <%= item.flag %>  </td>
+            <td> <%= item.member %>   </td>
+        </tr>
+       <% }); %>
+    </table>
+</body>
+</html>
