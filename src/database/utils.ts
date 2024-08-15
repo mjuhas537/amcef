@@ -4,6 +4,7 @@ import { User } from "../entity/User";
 
 export const getAllTasks = async (name?) => {
   if (name) {
+    // pravdepodobne tu niekde problem s query OR
     return await AppDataSource.getRepository(Task)
       .createQueryBuilder("task")
       .innerJoin(
@@ -35,7 +36,7 @@ export const updateTask = async (task, user) => {
   // kontrola nech nie je mozne pridelit ulohu nezaregistrovanemu user
   const confirmMembers = clearItem
     .filter((member) => nameOfMemberFromDb.includes(member))
-    .filter((x) => x !== user.name); // autor nemoze byt aj clen
+    .filter((x) => x !== task.author); // autor nemoze byt aj clen
 
   delete task.member;
 
@@ -128,7 +129,13 @@ async function removeRelation(task, user) {
   const users = findTask.user.map((user) => user.id);
 
   // vztah autor / task sa nesmie mazat
-  users.filter((x) => x !== user.id);
+
+  // tu niekde mam problem  ....
+  const findAuthor = await AppDataSource.getRepository(User)
+    .createQueryBuilder("User")
+    .where("user.name= :name ", { name: task.author })
+    .getOne();
+  users.filter((x) => x !== findAuthor.id);
 
   for (const user of users) {
     await AppDataSource.createQueryBuilder() // remove relation n to n
