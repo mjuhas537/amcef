@@ -2,45 +2,28 @@ import { AppDataSource } from "../data-source";
 import { Task } from "../entity/Task";
 import { User } from "../entity/User";
 
-export const getAllTasks = async (name?) => {
-  if (name) {
-    // pravdepodobne tu niekde problem s query OR
-    return await AppDataSource.getRepository(Task)
-      .createQueryBuilder("task")
-      .innerJoin(
-        `task.user`,
-        `user`,
-        `user.name =  :userName OR task.author = :author`,
-        {
-          userName: name,
-          author: name,
-        }
-      )
-      .select(["task", "user.name", "user.email", "user.id"])
-      .getMany();
-  } else {
-    return await AppDataSource.getRepository(Task)
-      .createQueryBuilder("task")
-      .leftJoin("task.user", "user")
-      .select(["task", "user.name", "user.email", "user.id"])
-      .getMany();
-  }
+export const getAllTasks = async () => {
+  return await AppDataSource.getRepository(Task)
+    .createQueryBuilder("task")
+    .leftJoin("task.user", "user")
+    .select(["task", "user.name", "user.email", "user.id"])
+    .getMany();
 };
 
-export const updateTask = async (task, user) => {
+export const updateTask = async (task) => {
   // validacia vstupnych dat pre pridavanie member
   const items = task.member.split(",");
   const clearItem = items.map((item) => item.split(" ").join(""));
   const memberFromDb = await getAllUsers();
   const nameOfMemberFromDb = memberFromDb.map((user) => user.name);
   // kontrola nech nie je mozne pridelit ulohu nezaregistrovanemu user
-  const confirmMembers = clearItem
-    .filter((member) => nameOfMemberFromDb.includes(member))
-    .filter((x) => x !== task.author); // autor nemoze byt aj clen
+  const confirmMembers = clearItem.filter((member) =>
+    nameOfMemberFromDb.includes(member)
+  );
 
+  task.deadline = new Date(task.deadline);
   delete task.member;
-
-  await removeRelation(task, user);
+  await removeRelation(task);
 
   await AppDataSource.createQueryBuilder()
     .update(Task)
@@ -118,7 +101,7 @@ async function addRelation(task, confirmMembers) {
   }
 }
 
-async function removeRelation(task, user) {
+async function removeRelation(task) {
   const findTask = await AppDataSource.getRepository(Task)
     .createQueryBuilder("task")
     .where("task.id = :id ", { id: task.id })
@@ -126,22 +109,14 @@ async function removeRelation(task, user) {
     .select(["task", "user.id"])
     .getOne();
 
-  const users = findTask.user.map((user) => user.id);
-
-  // vztah autor / task sa nesmie mazat
-
-  // tu niekde mam problem  ....
-  const findAuthor = await AppDataSource.getRepository(User)
-    .createQueryBuilder("User")
-    .where("user.name= :name ", { name: task.author })
-    .getOne();
-  users.filter((x) => x !== findAuthor.id);
-
-  for (const user of users) {
-    await AppDataSource.createQueryBuilder() // remove relation n to n
-      .relation(User, "task")
-      .of(user)
-      .remove(task);
+  if (findTask) {
+    const users = findTask.user.map((user) => user.id);
+    for (const user of users) {
+      await AppDataSource.createQueryBuilder() // remove relation n to n
+        .relation(User, "task")
+        .of(user)
+        .remove(task);
+    }
   }
   // nenasiel som metodu, ktora dokaze jednoducho update relation , tak ich vymazem a vytvorim nanovo
 }
@@ -171,4 +146,16 @@ export async function findUserByEmail(email) {
     .where("user.email = :email ", { email: email })
     .getOne();
   return findOne;
+}
+
+// tuto funkciu by mal spravne robit querybuilder
+export async function getAllTasksFromUser(loggedUser) {
+  const allTask = await getAllTasks();
+  const selectTask = allTask.filter(
+    (task) =>
+      task.author == loggedUser ||
+      task.user.find((item) => item.name == loggedUser)
+  );
+
+  return selectTask;
 }

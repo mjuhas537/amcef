@@ -26,10 +26,7 @@
             <th>Members</th>
         </tr>
          <% data.forEach(item=> { %>
-            <% let newDate=new Date(item.deadline) %> 
-            <% let month= newDate.getMonth()<10 ? "0"+newDate.getMonth():newDate.getMonth() %> 
-            <% let day=newDate.getDate()<10 ? "0" +newDate.getDate():newDate.getDate() %>
-            <% let date= newDate.getFullYear() + "-" + month + "-" + day %>
+            <% let date=item.deadline.toString().substring(4, 15) %> 
             <% let members=item.user.map(user=>user.name).join(", ") %>
         <tr>
             <td> <%= item.title %>  </td>

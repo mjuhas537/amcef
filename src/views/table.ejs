@@ -60,15 +60,12 @@
             <th>Description</th>
             <th>Deadline</th>
             <th>Flag</th>
-            <th>Author</th>>
+            <th>Author</th>
             <th>Membes</th>
             <th>Edit</th>
         </tr>
         <% data.forEach(item=> { %>
-            <% let newDate=new Date(item.deadline) %> 
-            <% let month= newDate.getMonth()<10 ? "0"+newDate.getMonth():newDate.getMonth() %> 
-            <% let day=newDate.getDate()<10 ? "0" +newDate.getDate():newDate.getDate() %>
-            <% let date= newDate.getFullYear() + "-" + month + "-" + day %>
+            <% let date=new Date(item.deadline).toISOString().substring(0,10) %>
             <% let members=item.user.map(user=>user.name).join(", ") %>
             <tr>
                 <form action="/updateTask" method="POST">
@@ -78,10 +75,10 @@
                         <input type="text" id="title" name="title" value= "<%= item.title %>" required > 
                     </td>
                     <td>
-                        <textarea  id="description" name="description"  rows="1" maxlength="300" required >"<%= item.description %>"</textarea>
+                        <textarea  id="description" name="description"  rows="1" maxlength="300" required ><%= item.description %></textarea>
                     </td>
                     <td>
-                        <input type="date" id="deadline" name="deadline" value="<%= date %>" required >
+                        <input type="date" id="deadline" name="deadline" value=<%= date %> required >
                     </td>
                     <td>
                         <select id="flag" name="flag" size="1" >
@@ -92,10 +89,10 @@
                         </select>
                     </td>
                     <td>
-                        <input type="text" id="author" name="author" value="<%= item.author %>"" readonly >
+                        <input type="text" id="author" name="author" value="<%= item.author %>" readonly >
                     </td>
                     <td>
-                        <input type="text" id="member" name="member" value="<%= members %>"" required >
+                        <input type="text" id="member" name="member" value="<%= members %>" >
                     
                     </td>
                     <td>
