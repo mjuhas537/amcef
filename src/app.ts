@@ -99,19 +99,19 @@ async function main() {
         const user = { email: req.user.email, name: req.user.name };
 
         res.render("table.ejs", {
-          members: nameOfmembers,
+          users: nameOfmembers,
           data: table,
-          message: user,
+          user: user,
         });
       });
 
       app.post("/updateTask", checkAuthenticated, async (req, res) => {
-        await updateTask(req.body);
+        await updateTask(req.body, req.user);
         res.redirect("/table");
       });
 
       app.post("/createTask", checkAuthenticated, async (req, res) => {
-        await createTask(req.body);
+        await createTask(req.body, req.user);
         res.redirect("/table");
       });
 

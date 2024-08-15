@@ -22,6 +22,7 @@
             <th>Description</th>
             <th>Deadline</th>
             <th>Flag</th>
+            <th>Author</th>
             <th>Members</th>
         </tr>
          <% data.forEach(item=> { %>
@@ -29,12 +30,16 @@
             <% let month= newDate.getMonth()<10 ? "0"+newDate.getMonth():newDate.getMonth() %> 
             <% let day=newDate.getDate()<10 ? "0" +newDate.getDate():newDate.getDate() %>
             <% let date= newDate.getFullYear() + "-" + month + "-" + day %>
+            <% let members=item.user.map(user=>user.name).join(", ") %>
         <tr>
             <td> <%= item.title %>  </td>
             <td> <%= item.description %> </td>
             <td> <%= date %>  </td>
             <td> <%= item.flag %>  </td>
-            <td> <%= item.member %>   </td>
+            <td>
+                <%= item.author %>
+            </td>
+            <td> <%= members %>   </td>
         </tr>
        <% }); %>
     </table>

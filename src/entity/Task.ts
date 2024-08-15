@@ -14,10 +14,10 @@ export class Task {
   description: string;
 
   @Column({ nullable: true })
-  deadline: Date;
+  author: string;
 
-  @Column({ nullable: true, array: true })
-  member: string;
+  @Column({ nullable: true })
+  deadline: Date;
 
   @Column({ nullable: true })
   flag: flag;

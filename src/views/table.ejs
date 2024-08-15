@@ -9,7 +9,7 @@
 <body>
     <div class = "welcome" >
         <h1>Welcome to the to-do list  </h1>
-        <h3> You are logged as <%= message.name %> / <%= message.email %> </h3> 
+        <h3> You are logged as <%=user.name %> / <%= user.email %> </h3> 
     </div>
     <div class="section1"  >
         <div >
@@ -37,16 +37,16 @@
                     </select>
                 </div>
                 <div>
-                    <span> Member / author : </span>
-                    <span> <%= message.name %> </span>
-                    <input type="text" id="member" name="member" value="<%= message.name  %>" style="visibility: hidden">
+                    <span> Author </span>
+                    <span> <%= user.name %> </span>
+                    <input type="text" id="author" name="author" value="<%= user.name  %>" style="visibility: hidden">
                 </div>
                 <button type="submit">createTask</button>
             </form>
         </div>
         <div >
             <div> <b>Members</b></div>
-            <div><%= members %></div>
+            <div><%= users %></div>
         </div>
     </div>
     <div class="info">
@@ -60,6 +60,7 @@
             <th>Description</th>
             <th>Deadline</th>
             <th>Flag</th>
+            <th>Author</th>>
             <th>Membes</th>
             <th>Edit</th>
         </tr>
@@ -68,6 +69,7 @@
             <% let month= newDate.getMonth()<10 ? "0"+newDate.getMonth():newDate.getMonth() %> 
             <% let day=newDate.getDate()<10 ? "0" +newDate.getDate():newDate.getDate() %>
             <% let date= newDate.getFullYear() + "-" + month + "-" + day %>
+            <% let members=item.user.map(user=>user.name).join(", ") %>
             <tr>
                 <form action="/updateTask" method="POST">
                     <%# Spravne je metoda PUT, ale ejs pozna len GET a POST, vraj sa da metoda-override %>
@@ -90,7 +92,10 @@
                         </select>
                     </td>
                     <td>
-                        <input type="text" id="member" name="member" value="<%= item.member %>"" required >
+                        <input type="text" id="author" name="author" value="<%= item.author %>"" readonly >
+                    </td>
+                    <td>
+                        <input type="text" id="member" name="member" value="<%= members %>"" required >
                     
                     </td>
                     <td>
