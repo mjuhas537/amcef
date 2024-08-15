@@ -37,8 +37,6 @@ export const updateTask = async (task, user) => {
     .filter((member) => nameOfMemberFromDb.includes(member))
     .filter((x) => x !== user.name); // autor nemoze byt aj clen
 
-  console.log(confirmMembers);
-
   delete task.member;
 
   await removeRelation(task, user);
@@ -59,18 +57,10 @@ export const createTask = async (newTask, user) => {
     .values(newTask)
     .execute();
 
-  // !!! DOPRACUJ !!!
-
-  // zisti ci je nutne hladat task pre vytvorenie vztahu ak mas jeho iD
-  const getNewTask = await AppDataSource.getRepository(Task)
-    .createQueryBuilder("task")
-    .where("task.id = :id ", { id: createTask.raw[0].id })
-    .getOne();
-
   await AppDataSource.createQueryBuilder()
     .relation(User, "task")
     .of(user)
-    .add(getNewTask);
+    .add(createTask.raw[0].id);
 };
 
 export const createUser = async (user) => {
@@ -141,14 +131,9 @@ async function removeRelation(task, user) {
   users.filter((x) => x !== user.id);
 
   for (const user of users) {
-    // !!! DOPRACUJ !!!
-
-    // zisti ci je nutne hladat user pre vytvorenie vztahu ak mas jeho iD
-    const userFromDb = await findUserById(user);
-
     await AppDataSource.createQueryBuilder() // remove relation n to n
       .relation(User, "task")
-      .of(userFromDb)
+      .of(user)
       .remove(task);
   }
   // nenasiel som metodu, ktora dokaze jednoducho update relation , tak ich vymazem a vytvorim nanovo
