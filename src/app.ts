@@ -9,7 +9,6 @@ import {
   getAllTasks,
   getAllUsers,
   updateTask,
-  getAllTasksFromUser,
 } from "./database/utils";
 
 var bodyParser = require("body-parser");
@@ -94,7 +93,7 @@ async function main() {
       });
 
       app.get("/table", checkAuthenticated, async function (req, res) {
-        const table = await getAllTasksFromUser(req.user.name);
+        const table = await getAllTasks(req.user.name);
         const members = await getAllUsers();
         const nameOfmembers = members.map((member) => member.name).join(", ");
         const user = { email: req.user.email, name: req.user.name };

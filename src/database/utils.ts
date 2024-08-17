@@ -2,7 +2,21 @@ import { AppDataSource } from "../data-source";
 import { Task } from "../entity/Task";
 import { User } from "../entity/User";
 
-export const getAllTasks = async () => {
+export const getAllTasks = async (userLoged?) => {
+  if (userLoged) {
+    return await AppDataSource.getRepository(Task)
+      .createQueryBuilder("task")
+      .leftJoinAndSelect("task.user", "user")
+      .where("user.name = :name", {
+        name: userLoged,
+      })
+      .orWhere("task.author = :author ", {
+        author: userLoged,
+      })
+      .select(["task", "user.name", "user.email", "user.id"])
+      .getMany();
+  }
+
   return await AppDataSource.getRepository(Task)
     .createQueryBuilder("task")
     .leftJoin("task.user", "user")
@@ -146,16 +160,4 @@ export async function findUserByEmail(email) {
     .where("user.email = :email ", { email: email })
     .getOne();
   return findOne;
-}
-
-// tuto funkciu by mal spravne robit querybuilder
-export async function getAllTasksFromUser(loggedUser) {
-  const allTask = await getAllTasks();
-  const selectTask = allTask.filter(
-    (task) =>
-      task.author == loggedUser ||
-      task.user.find((item) => item.name == loggedUser)
-  );
-
-  return selectTask;
 }
