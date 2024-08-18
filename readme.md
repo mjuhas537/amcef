@@ -13,7 +13,7 @@ Návod na sputenie
    - 2.1 Stiahnutie repozitára z https://github.com/mjuhas537/amcef prostrednictvom github desktop
    - 2.2 Otvorenie projektu skrz github Desktop vo VScode
    - 2.3 spustenie pgAdmin, vytvorenie a nastavenie servra podľa parametrov v data-source.ts
-     - 2.4 Vo VScode spustime príkazovy riadok ubuntu s nasledujúcimi príkazmi
+   - 2.4 Vo VScode spustime príkazovy riadok ubuntu s nasledujúcimi príkazmi
      - 2.4.1 stiahnutie a instalacia knizniic: npm i
      - 2.4.2 vytvorenie tabuliek v databaze: npm migrate
      - 2.4.3 spustenie projektu: npm run start
