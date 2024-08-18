@@ -1,10 +1,10 @@
 import { MigrationInterface, QueryRunner } from "typeorm";
 
-export class Test1722801590917 implements MigrationInterface {
-    name = 'Test1722801590917'
+export class Test1724014958520 implements MigrationInterface {
+    name = 'Test1724014958520'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`CREATE TABLE "task" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying, "description" character varying, "deadline" TIMESTAMP, "member" character varying array, "flag" character varying, CONSTRAINT "PK_fb213f79ee45060ba925ecd576e" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "task" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "title" character varying, "description" character varying, "author" character varying, "deadline" TIMESTAMP, "flag" character varying, CONSTRAINT "PK_fb213f79ee45060ba925ecd576e" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "user" ("id" uuid NOT NULL DEFAULT uuid_generate_v4(), "name" character varying, "email" character varying, "password" character varying, CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`);
         await queryRunner.query(`CREATE TABLE "user_task_task" ("userId" uuid NOT NULL, "taskId" uuid NOT NULL, CONSTRAINT "PK_7e24789523e533650ba93c62327" PRIMARY KEY ("userId", "taskId"))`);
         await queryRunner.query(`CREATE INDEX "IDX_5ac2bbe1f56be9cc95d5e854d2" ON "user_task_task" ("userId") `);
