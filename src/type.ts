@@ -1,3 +1,5 @@
+import { User } from "./entities/User";
+
 export enum flag {
   CREATED = "crated",
   REALIZED = "realized",
@@ -20,10 +22,16 @@ export interface reqCreateTask {
   author: string;
   deadline: Date;
   flag: flag;
+  user: User[];
 }
 
-export interface reqUpdateTask extends reqCreateTask {
+export interface reqUpdateTask {
   id: string;
+  title: string;
+  description: string;
+  author: string;
+  deadline: Date;
+  flag: flag;
   member?: string;
 }
 

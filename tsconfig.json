@@ -17,5 +17,7 @@
    },
     "include": [
         "src/**/*.ts",
-        "app.ts"]      
+        "app.ts",
+        "express.d.ts",
+        "express-flash.d.ts"]      
 }
