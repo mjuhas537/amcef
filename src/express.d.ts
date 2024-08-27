@@ -3,7 +3,7 @@ import { User } from "./entities/User";
 
 declare module "express-serve-static-core" {
   interface Request {
-    user: User; // Alebo nahraďte `any` konkrétnym typom vašej `user` objektu
+    user?: User; // Alebo nahraďte `any`
   }
 
   interface Request {

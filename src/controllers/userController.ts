@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { UserService } from "../services/userService";
 import { TaskService } from "../services/taskService";
-import { message, userRegistration } from "../type";
+import { message, userRegistration } from "../type/type";
 
 export class UserController {
   static async intro(req: Request, res: Response): Promise<void> {

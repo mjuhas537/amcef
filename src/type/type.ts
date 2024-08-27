@@ -1,4 +1,4 @@
-import { User } from "./entities/User";
+import { User } from "../entities/User";
 
 export enum flag {
   CREATED = "crated",
@@ -25,13 +25,8 @@ export interface reqCreateTask {
   user: User[];
 }
 
-export interface reqUpdateTask {
+export interface reqUpdateTask extends Omit<reqCreateTask, "user"> {
   id: string;
-  title: string;
-  description: string;
-  author: string;
-  deadline: Date;
-  flag: flag;
   member?: string;
 }
 

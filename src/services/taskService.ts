@@ -1,7 +1,7 @@
 import { taskRepository, userRepository } from "../repositories/userRepository";
 import { User } from "../entities/User";
 import { Task } from "../entities/Task";
-import { reqCreateTask, reqUpdateTask } from "../type";
+import { reqCreateTask, reqUpdateTask } from "../type/type";
 import { UserService } from "./userService";
 
 export class TaskService {
@@ -29,9 +29,10 @@ export class TaskService {
     // ORM model TASK neobsajuje udaj members, ale vytvara sa vztah s tabulkou Users
     delete task.member;
     task.deadline = new Date(task.deadline);
-    // nenasiel som metodu, ktora dokaze jednoducho update relation tj. odstranit zaniknute vztahy
-    // tak ich vymazem vsetky a vytvorim nanovo
-    // neviem pouzit metodu task.user = [users] a potom save(task) nepoznam iD pridanych users iba name
+
+    // neviem aktualizovať vzťahy tj. odstranit zaniknute vztahy
+    // preto ich všetky vymažem a vytvorím znova.
+    // Nemôžem použiť task.user = [users] a potom save(task), lebo mám len mená, nie ID.
     await this.removeRelation(task.id);
 
     await taskRepository.save(task);

@@ -2,6 +2,7 @@ import path = require("path");
 import UserRoutes from "./routes/userRoutes";
 import { UserService } from "./services/userService";
 import { checkAuthenticated } from "./authentication/checkAuthenticated";
+
 const express = require("express");
 const app = express();
 const passport = require("passport");
@@ -22,14 +23,13 @@ app.use(
     saveUninitialized: false,
   })
 );
-app.use(passport.initialize());
-app.use(passport.session());
-
 initializePassport(
   passport,
   (email: string) => UserService.findUser({ email: email }),
   (id: string) => UserService.findUser({ id: id })
 );
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.json());
 app.use("/table", checkAuthenticated);

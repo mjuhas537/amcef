@@ -1,6 +1,6 @@
 import { userRepository } from "../repositories/userRepository";
 import { User } from "../entities/User";
-import { message, userRegistration } from "../type";
+import { message, userRegistration } from "../type/type";
 import bcrypt = require("bcrypt");
 import { FindOptionsWhere } from "typeorm";
 
