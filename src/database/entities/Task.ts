@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
-import { flag } from "../type/type";
+import { flag } from "../../type/type";
 import { User } from "./User";
 
 @Entity()

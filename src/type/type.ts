@@ -1,4 +1,4 @@
-import { User } from "../entities/User";
+import { User } from "../database/entities/User";
 
 export enum flag {
   CREATED = "crated",

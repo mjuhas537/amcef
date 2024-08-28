@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { UserController } from "../controllers/userController";
-import { authenticateLocal } from "../authentication/authenticateUser";
+import { authenticateLocal } from "../middlewares/authentication/authenticateUser";
 import { Validate } from "../validators/validator";
 import validationResultHandler from "../validators/validationResultHandler";
 import { RemoveExtraFields } from "../validators/removeExtraFields";

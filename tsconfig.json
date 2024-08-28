@@ -15,10 +15,17 @@
       "experimentalDecorators": true,
       "sourceMap": true,
       "typeRoots": ["./node_modules/@types", "./src/types"],
+      "esModuleInterop": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
    },
     "include": [
         "src/**/*.ts",
         "app.ts",
         "express.d.ts",
-        "express-flash.d.ts"]      
+        "express-flash.d.ts"
+      ],
+    "exclude": [
+         "node_modules",
+         "**/*.test.ts"]     
 }

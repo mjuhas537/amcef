@@ -1,6 +1,9 @@
-import { taskRepository, userRepository } from "../repositories/userRepository";
-import { User } from "../entities/User";
-import { Task } from "../entities/Task";
+import {
+  taskRepository,
+  userRepository,
+} from "../database/repositories/userRepository";
+import { User } from "../database/entities/User";
+import { Task } from "../database/entities/Task";
 import { reqCreateTask, reqUpdateTask } from "../type/type";
 import { UserService } from "./userService";
 

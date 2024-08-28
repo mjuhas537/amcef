@@ -1,7 +1,8 @@
 import path = require("path");
 import UserRoutes from "./routes/userRoutes";
 import { UserService } from "./services/userService";
-import { checkAuthenticated } from "./authentication/checkAuthenticated";
+import { checkAuthenticated } from "./middlewares/authentication/checkAuthenticated";
+import rateLimiter from "./middlewares/rateLimiter/rateLimiter";
 
 const express = require("express");
 const app = express();
@@ -30,7 +31,7 @@ initializePassport(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(rateLimiter);
 app.use(express.json());
 app.use("/table", checkAuthenticated);
 app.use("/updateTask", checkAuthenticated);
