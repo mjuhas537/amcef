@@ -6,13 +6,16 @@ import { Task } from "../entities/Task";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: process.env.DB_HOST,
-  port: Number(process.env.DB_PORT),
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  host: process.env.POSTGRES_HOST,
+  port: Number(process.env.POSTGRES_PORT),
+  username: process.env.POSTGRES_USERNAME,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DATABASE,
   synchronize: false,
   logging: false,
   entities: [User, Task],
-  migrations: ["./src/migration/*.ts"],
+  //localne ts-node bez buildu
+  // migrations: ["./src/database/migration/*.ts"],
+  // pre docker, resp ked spustam compilovany js projekt , nie ces ts-node  *.ts
+  migrations: ["./build/database/migration/*.js"],
 });

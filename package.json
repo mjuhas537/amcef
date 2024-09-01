@@ -4,12 +4,15 @@
    "main": "app.js",
    "type": "commonjs",
    "scripts": {
-      "dev": "ts-node src/server.ts",
-      "typeorm:create": "typeorm-ts-node-esm migration:create ./src/migration/test",
-      "typeorm:generate": "typeorm-ts-node-esm migration:generate ./src/migration/test  -d  ./src/data-source",
-      "typeorm:migrate": "typeorm-ts-node-esm migration:run  -d ./src/data-source",
+      "typeorm:create": "typeorm-ts-node-esm migration:create ./src/database/migration/test",
+      "typeorm:generate": "typeorm-ts-node-esm migration:generate ./src/database/migration/test  -d  ./src/database/config/data-source",
+      "typeorm:migrate": "typeorm-ts-node-esm migration:run  -d ./src/database/config/data-source",
+      "docker:migrate": "typeorm-ts-node-esm migration:run  -d ./build/database/config/data-source",
       "ejs:lint": "ejslint src/views/**.ejs",
-      "nodemon": "nodemon  src/server.ts"
+      "dev": "ts-node src/server.ts",
+      "nodemon": "nodemon  src/server.ts",
+      "build": "tsc && cp -r src/*.js build/  && cp -r src/views build/",
+      "startInsadeDocker": "node build/server.js"
    },
    "keywords": [],
    "author": "",
