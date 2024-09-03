@@ -20,6 +20,7 @@ services:
     depends_on:
       - db
     environment:
+      NODE_ENV: docker
       DATABASE_URL: postgres://postgres:postgres@db:5432/postgres
     ports:
       - "3000:3000"

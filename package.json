@@ -7,7 +7,7 @@
       "typeorm:create": "typeorm-ts-node-esm migration:create ./src/database/migration/test",
       "typeorm:generate": "typeorm-ts-node-esm migration:generate ./src/database/migration/test  -d  ./src/database/config/data-source",
       "typeorm:migrate": "typeorm-ts-node-esm migration:run  -d ./src/database/config/data-source",
-      "docker:migrate": "typeorm-ts-node-esm migration:run  -d ./build/database/config/data-source",
+      "docker:migrate": "typeorm migration:run  -d ./build/database/config/data-source",
       "ejs:lint": "ejslint src/views/**.ejs",
       "dev": "ts-node src/server.ts",
       "nodemon": "nodemon  src/server.ts",
