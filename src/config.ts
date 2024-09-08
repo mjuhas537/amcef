@@ -1,3 +1,5 @@
+import { logger } from "./logger/logger";
+
 require("dotenv").config();
 
 // Získanie hodnoty premennej prostredia 'NODE_ENV'
@@ -14,6 +16,6 @@ if (nodeEnv === "docker") {
   password = process.env.LOCAL_POSTGRES_PASSWORD as string;
 }
 
-console.log(`NODE_ENV: ${nodeEnv}, DB: host: ${host},  password: ${password}`);
+logger.info(`NODE_ENV: ${nodeEnv || "local"}, DB: host: ${host}`);
 
 export { host, password };

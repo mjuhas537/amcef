@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UserService } from "../services/userService";
 import { TaskService } from "../services/taskService";
 import { message, userRegistration } from "../type/type";
+import { logger } from "../logger/logger";
 
 export class UserController {
   static async intro(req: Request, res: Response): Promise<void> {
@@ -9,7 +10,7 @@ export class UserController {
       const data = await TaskService.getAllTasks();
       res.render("intro.ejs", { data: data });
     } catch (error) {
-      console.log("Error with get intro request :  ", error);
+      logger.error("Error with get intro request :  ", error);
       res.status(500).send("Error with render page intro.ejs ");
     }
   }
@@ -18,7 +19,7 @@ export class UserController {
     try {
       res.status(201).render("login.ejs", { message: req.flash() });
     } catch (error) {
-      console.log("Error with get login request :  ", error);
+      logger.error("Error with get login request :  ", error);
       res.status(500).send("Error with render page login.ejs ");
     }
   }
@@ -27,7 +28,7 @@ export class UserController {
     try {
       res.status(201).render("registration.ejs", { message: req.flash() });
     } catch (error) {
-      console.log("Error with get registration request :  ", error);
+      logger.error("Error with get registration request :  ", error);
       res.status(500).send("Error with render page registration.ejs ");
     }
   }
@@ -45,7 +46,7 @@ export class UserController {
         res.redirect("login");
       }
     } catch (error) {
-      console.log("Error with post registration request :  ", error);
+      logger.error("Error with post registration request :  ", error);
       res.status(500).send("Error with post registration form ");
     }
   }
@@ -65,7 +66,7 @@ export class UserController {
         user: user,
       });
     } catch (error) {
-      console.log("Error with get table request :  ", error);
+      logger.error("Error with get table request :  ", error);
       res.status(500).json("Failed to render page table.ejs ");
     }
   }
@@ -74,7 +75,7 @@ export class UserController {
       await TaskService.updateTask(req.body);
       res.status(201).redirect("/table");
     } catch (error) {
-      console.log("Error with get updateTask request :  ", error);
+      logger.error("Error with get updateTask request :  ", error);
       res.status(500).send("Error with post updateTask form ");
     }
   }
@@ -84,7 +85,7 @@ export class UserController {
       await TaskService.createTask(req.body, req.user);
       res.status(201).redirect("/table");
     } catch (error) {
-      console.log("Error with get createTask request :  ", error);
+      logger.error("Error with get createTask request :  ", error);
       res.status(500).send("Error with post createTable form ");
     }
   }

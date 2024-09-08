@@ -1,9 +1,10 @@
 import app from "./app";
 import { AppDataSource } from "./database/config/data-source";
+import { logger } from "./logger/logger";
 
 AppDataSource.initialize()
   .then(() => {
-    console.log("Database connected");
-    app.listen(3000, () => console.log("Server is running on port 3000"));
+    logger.info("Database connected");
+    app.listen(3000, () => logger.info("Server is running on port 3000"));
   })
-  .catch((e) => console.log("Database connection error: ", e));
+  .catch((e) => logger.info("Database connection error: ", e));

@@ -3,13 +3,14 @@ import { User } from "../database/entities/User";
 import { message, userRegistration } from "../type/type";
 import bcrypt = require("bcrypt");
 import { FindOptionsWhere } from "typeorm";
+import { logger } from "../logger/logger";
 
 export class UserService {
   static createUser = async (user: userRegistration): Promise<message> => {
     try {
       user.password = await bcrypt.hash(user.password, 10);
     } catch (e) {
-      console.log("Error with hash password: ", e);
+      logger.error("Error with hash password: ", e);
     }
     const findRegisteredUser = await this.findUser([
       { name: user.name },
