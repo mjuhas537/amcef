@@ -3,6 +3,7 @@ import UserRoutes from "./routes/userRoutes";
 import { UserService } from "./services/userService";
 import { checkAuthenticated } from "./middlewares/authentication/checkAuthenticated";
 import rateLimiter from "./middlewares/rateLimiter/rateLimiter";
+import helmet from "helmet";
 
 const express = require("express");
 const app = express();
@@ -10,6 +11,12 @@ const passport = require("passport");
 const initializePassport = require("./passport-config");
 const flash = require("express-flash");
 const session = require("express-session");
+
+app.use(helmet());
+app.use(helmet.hidePoweredBy());
+app.use(helmet.frameguard({ action: "deny" })); // Blokuje všechny iframy
+app.use(helmet.xssFilter());
+app.use(helmet.noSniff());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -36,6 +43,7 @@ app.use(express.json());
 app.use("/table", checkAuthenticated);
 app.use("/updateTask", checkAuthenticated);
 app.use("/createTask", checkAuthenticated);
+
 app.use("", UserRoutes);
 
 export default app;
